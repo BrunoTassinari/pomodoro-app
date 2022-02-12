@@ -1,25 +1,44 @@
 import { useState, useEffect } from "react";
 
 
+const Music = ({press, requestPress}) => {
+  const singInitialBreak = new Audio("./src/assets/sounds/song.mp3");
 
 
-const ButtonRestart = ({ setTimers, btnShow, resetTimers, setStart, pickEvent}) => {
+    useEffect(() => {
+      const alertInterval = setInterval(() =>{
+        singInitialBreak.play()
+        if(press){
+          clearInterval(alertInterval)
+        }
+      }, 1000)
+      
+    }, [press])
 
-    const [press, setPres] = useState(false)
+  
 
-    const sendPress = () => {
-        setPres(true);
-        pickEvent(press)
-    }
 
+  return (null)
+
+}
+
+const ButtonRestart = ({
+  setTimers,
+  btnShow,
+  resetTimers,
+  setStart,
+}) => {
+  const singInitialBreak = new Audio("./src/assets/sounds/song.mp3");
+  const [press, setPres] = useState(false);
   if (btnShow) {
     return (
       <button
         id="btn"
         onClick={() => {
-          return sendPress(), setTimers(), resetTimers(), setStart(false);
+          return setPres(true), setTimers(), resetTimers(), setStart(false);
         }}
       >
+        <Music press={press}></Music>
         Recomerçar
       </button>
     );
@@ -29,8 +48,7 @@ const ButtonRestart = ({ setTimers, btnShow, resetTimers, setStart, pickEvent}) 
 };
 
 const CardBreak = ({ minutes, seconds, setStart, show, setTimers }) => {
-
-    const singInitialBreak = new Audio("./src/assets/sounds/song.mp3");
+  let isClick = 0
   const [minBanner, setMinBanner] = useState(0);
   const [secBanner, setSecBanner] = useState(4);
   const [btnShow, setBtnShow] = useState(false);
@@ -48,11 +66,8 @@ const CardBreak = ({ minutes, seconds, setStart, show, setTimers }) => {
             setSecBanner(59);
             setMinBanner(minBanner - 1);
           }
-
           if (minBanner === 0) {
             setBtnShow(true);
-            pickEvent()
-            
           }
         } else {
           setSecBanner(secBanner - 1);
@@ -67,10 +82,6 @@ const CardBreak = ({ minutes, seconds, setStart, show, setTimers }) => {
     setBtnShow(false);
   };
 
-  const pickEvent = (state) => {
-    console.log(state)
-  }
-
   if (show) {
     return (
       <div>
@@ -80,7 +91,6 @@ const CardBreak = ({ minutes, seconds, setStart, show, setTimers }) => {
           btnShow={btnShow}
           resetTimers={resetTimers}
           setTimers={setTimers}
-          pickEvent={pickEvent}
         ></ButtonRestart>
       </div>
     );
