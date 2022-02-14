@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import CardBreak from "../CardBreak/CardBreak";
+import "./Pomodoro.css"
+import Timer from "../Timer/Timer";
 
 const singInitialBreak = new Audio("./src/assets/sounds/song.mp3");
 
@@ -15,9 +17,6 @@ const Pomodoro = () => {
   const [show, setShow] = useState(false);
   const [start, setStart] = useState(false);
 
-  const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
-  const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
-
   useEffect(() => {
     const intervalTimer = setInterval(() => {
       clearInterval(intervalTimer);
@@ -31,9 +30,9 @@ const Pomodoro = () => {
 
           if (minutes === 0) {
             singInitialBreak.play();
-            setTimeout(() => {
+            
               setShow(true);
-            }, 1000);
+            
           }
         } else {
           setSeconds(seconds - 1);
@@ -49,17 +48,20 @@ const Pomodoro = () => {
   };
 
   return (
-    <section className="main">
-      <h1>{`${timerMinutes}:${timerSeconds}`}</h1>
+    <section>
+      <Timer 
+      seconds={seconds}
+      minutes={minutes}
+
+      ></Timer>
       <StartButton start={start} setStart={setStart}></StartButton>
-      <CardBreak
+      {show? <CardBreak
         setStart={setStart}
         minutes={minutes}
         seconds={seconds}
         setShow={setShow}
         setTimers={setTimers}
-        show={show}
-      ></CardBreak>
+      ></CardBreak> : null}
     </section>
   );
 };

@@ -1,57 +1,52 @@
 import { useState, useEffect } from "react";
+import "../../styles/root.css"
+import './CardBreak.css'
+import Timer from "../Timer/Timer";
 
 
-const Music = ({press, requestPress}) => {
-  const singInitialBreak = new Audio("./src/assets/sounds/song.mp3");
+const singInitialBreak = new Audio("./src/assets/sounds/song.mp3");
 
+const ButtonRestart = ({ setTimers, resetTimers, setStart, pressBtn, setPressBtn}) => {
 
-    useEffect(() => {
-      const alertInterval = setInterval(() =>{
-        singInitialBreak.play()
-        if(press){
-          clearInterval(alertInterval)
+  useEffect(() => {
+    
+      const alertInterval = setInterval(() => {
+        verify()
+        if(pressBtn == true){
+          clearInterval(alertInterval);
         }
       }, 1000)
-      
-    }, [press])
+     
 
-  
+    return () => {clearInterval(alertInterval), setPressBtn(false);}
+    
+  }, []);
 
-
-  return (null)
-
-}
-
-const ButtonRestart = ({
-  setTimers,
-  btnShow,
-  resetTimers,
-  setStart,
-}) => {
-  const singInitialBreak = new Audio("./src/assets/sounds/song.mp3");
-  const [press, setPres] = useState(false);
-  if (btnShow) {
-    return (
-      <button
-        id="btn"
-        onClick={() => {
-          return setPres(true), setTimers(), resetTimers(), setStart(false);
-        }}
-      >
-        <Music press={press}></Music>
-        Recomerçar
-      </button>
-    );
-  } else {
-    return null;
+  function verify() {  
+      if (pressBtn != true) {
+        singInitialBreak.play()
+      }
+    
   }
+
+  return (
+    <button
+      id="btn"
+      onClick={() => {
+        return setPressBtn(true), setTimers(), resetTimers(), setStart(false);
+      }}
+    >
+      Recomerçar
+    </button>
+  );
 };
 
-const CardBreak = ({ minutes, seconds, setStart, show, setTimers }) => {
-  let isClick = 0
+const CardBreak = ({ minutes, seconds, setStart, setTimers }) => {
   const [minBanner, setMinBanner] = useState(0);
   const [secBanner, setSecBanner] = useState(4);
   const [btnShow, setBtnShow] = useState(false);
+  const [pressBtn, setPressBtn] = useState(false);
+
 
   const timerMinutes = minBanner < 10 ? `0${minBanner}` : minBanner;
   const timerSeconds = secBanner < 10 ? `0${secBanner}` : secBanner;
@@ -82,21 +77,27 @@ const CardBreak = ({ minutes, seconds, setStart, show, setTimers }) => {
     setBtnShow(false);
   };
 
-  if (show) {
+  
     return (
-      <div>
-        <h1>{`${timerMinutes}:${timerSeconds}`}</h1>
-        <ButtonRestart
-          setStart={setStart}
-          btnShow={btnShow}
-          resetTimers={resetTimers}
-          setTimers={setTimers}
-        ></ButtonRestart>
+      <div className={!pressBtn? 'show-content' : "hide-content"}>
+        <div className="show-content-container">
+          <Timer
+            minutes={minBanner}
+            seconds={secBanner}
+          >
+          </Timer>
+          {btnShow? <ButtonRestart
+            setStart={setStart}
+            btnShow={btnShow}
+            resetTimers={resetTimers}
+            setTimers={setTimers}
+            pressBtn={pressBtn}
+            setPressBtn={setPressBtn}
+          ></ButtonRestart> : null}
+        </div>
       </div>
     );
-  } else {
-    return null;
-  }
-};
+  
+}
 
 export default CardBreak;
