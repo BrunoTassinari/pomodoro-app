@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import "../../styles/root.css"
+import "../../styles/index.css"
+import './Timer.css'
 
 const Timer = ({seconds,minutes}) => {
     const secondsScreen = seconds < 10 ? `0${seconds}` : seconds;

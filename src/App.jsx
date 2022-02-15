@@ -1,13 +1,17 @@
 import Pomodoro from './components/Pomodoro/Pomodoro'
+import Header from './components/Header/Header'
 import "./styles/root.css"
+import "./styles/index.css"
 import './styles/App.css'
 
 function App() {
   return(
-    <main className="main">
-      <h1>Pomodoro app</h1>
-      <Pomodoro></Pomodoro>
-    </main>
+    <div className="main">
+      <Header></Header>
+      <section className="content">
+        <Pomodoro></Pomodoro>
+      </section>
+    </div>
   )
 }
 

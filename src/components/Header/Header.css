@@ -1,0 +1,8 @@
+header{
+    background-color: var(--smoothGrenn);
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Maven Pro', sans-serif;
+    color: var(--TrueBlack);
+    padding: 15px
+}

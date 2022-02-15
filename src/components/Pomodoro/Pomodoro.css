@@ -1,4 +1,12 @@
-.main{
-    height: 100%;
+.timer-content{
+    background-color: var(--smothBlack);
     
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    width: 40%;
+    height: 30%;
+
 }

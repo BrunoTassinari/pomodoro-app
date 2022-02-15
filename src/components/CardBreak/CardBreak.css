@@ -1,19 +1,23 @@
-.show-content{
-    background-color: var(--color);
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
 
+button{
+    cursor: pointer;
+    background-color: var(--smoothGrenn);
+
+    width: 30%;
+    height: 25%;
+
+    font-size: 25px;
+    font-family: 'Source Code Pro', monospace;
+    font-weight: bold;
+    color: var(--TrueBlack);
+    border-radius: 15px;
+
+    transition: linear 0.3s;
 }
-.show-content-container{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
+
+button:hover{
+    background-color: var(--TrueBlack);
+    color: var(--smoothGrenn);
 }
-    
+
 

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import CardBreak from "../CardBreak/CardBreak";
-import "./Pomodoro.css"
+import '../../styles/root.css'
+import '../../styles/index.css'
+import "./Pomodoro.css";
 import Timer from "../Timer/Timer";
 
 const singInitialBreak = new Audio("./src/assets/sounds/song.mp3");
@@ -12,8 +14,8 @@ const StartButton = ({ start, setStart }) => {
 };
 
 const Pomodoro = () => {
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(1);
+  const [minutes, setMinutes] = useState(25);
+  const [seconds, setSeconds] = useState(0);
   const [show, setShow] = useState(false);
   const [start, setStart] = useState(false);
 
@@ -30,9 +32,7 @@ const Pomodoro = () => {
 
           if (minutes === 0) {
             singInitialBreak.play();
-            
-              setShow(true);
-            
+            setShow(true);
           }
         } else {
           setSeconds(seconds - 1);
@@ -48,20 +48,18 @@ const Pomodoro = () => {
   };
 
   return (
-    <section>
-      <Timer 
-      seconds={seconds}
-      minutes={minutes}
-
-      ></Timer>
+    <section className="timer-content">
+      <Timer seconds={seconds} minutes={minutes}></Timer>
       <StartButton start={start} setStart={setStart}></StartButton>
-      {show? <CardBreak
-        setStart={setStart}
-        minutes={minutes}
-        seconds={seconds}
-        setShow={setShow}
-        setTimers={setTimers}
-      ></CardBreak> : null}
+      {show ? (
+            <CardBreak
+              setStart={setStart}
+              minutes={minutes}
+              seconds={seconds}
+              setShow={setShow}
+              setTimers={setTimers}
+            ></CardBreak>
+      ) : null}
     </section>
   );
 };
